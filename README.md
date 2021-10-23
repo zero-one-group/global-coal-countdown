@@ -18,16 +18,19 @@ The countries’ political affiliations such as EU27+1, G20, G7, OECD and PPCA a
 
 ## Dashboard Data
 
-The resulting datasets are available for download on the `dashboard_data/` directory as JSON files. The following JSONs correspond to a page on the BGCC website:
+The resulting datasets are available for download as part of a release attached to the repository - see [Releases](https://github.com/zero-one-group/global-coal-countdown/releases).
+
+The following JSONs correspond to a page on the BGCC website:
+
 * `coal_capacity_landscape.json`
-*  `coal_power_generation.json`
-*  `country_main.json`
-*  `homepage.json`
-*  `newsfeed.json` 
+* `coal_power_generation.json`
+* `country_main.json`
+* `homepage.json`
+* `newsfeed.json`
 
 The following JSONs are utility lookup datasets:
 * `country_coal_status.json`
-*  `country_iso_lookup.json`
+* `country_iso_lookup.json`
 * `iso_country_lookup.json`
 * `website_texts.json`
 

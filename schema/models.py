@@ -12,7 +12,7 @@ from pydantic import (
 )
 
 from schema.enum_key_values import COUNTRY_KEY_VALUES, ISO_KEY_VALUES
-from schema.utils import (
+from schema.validation import (
     american_date,
     length_constraint,
     min_length,
@@ -20,6 +20,7 @@ from schema.utils import (
     percentage_string,
     require_dict_keys,
     sorted_by_capacity,
+    unique_elements,
     valid_bounds,
     valid_long_lat,
     valid_year,
@@ -75,6 +76,15 @@ class CountryRankingsByStatus(BaseModel, extra=Extra.forbid):
     )
     _sorted_by_capacity = validate(
         sorted_by_capacity,
+        'operational',
+        'construction',
+        'planned',
+        'cancelled',
+        'halted',
+        'retired',
+    )
+    _unique_countries = validate(
+        unique_elements(lambda model: model.country),
         'operational',
         'construction',
         'planned',
@@ -149,6 +159,13 @@ class RegionalCapacityChanges(BaseModel, extra=Extra.forbid):
     china: List[CapacitySnapshot]
     non_oecd_no_china: List[CapacitySnapshot]
 
+    _unique_years = validate(
+        unique_elements(lambda model: model.year),
+        'oecd_and_eu',
+        'china',
+        'non_oecd_no_china'
+    )
+
 
 class HomePageData(BaseModel, extra=Extra.forbid):
     global_totals: GlobalTotals
@@ -156,6 +173,11 @@ class HomePageData(BaseModel, extra=Extra.forbid):
     coal_plants_by_status: CoalPlantsByStatus = Field(..., description='BBG10')
     emission_pathways: List[EmissionPathwayPoint] = Field(..., description='BBG13')
     regional_capacity_changes: RegionalCapacityChanges = Field(..., description='BBG15')
+
+    _unique_years = validate(
+        unique_elements(lambda model: model.year),
+        'emission_pathways',
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -207,6 +229,11 @@ class SingleCountryMainData(BaseModel, extra=Extra.forbid):
         min_length(1),
         'capacity_trends',
         'capacity_time_series'
+    )
+    _unique_years = validate(
+        unique_elements(lambda model: model.year),
+        'capacity_time_series',
+        'capacity_trends',
     )
 
 
@@ -331,6 +358,14 @@ class CountryCoalCapacityLandscape(BaseModel, extra=Extra.forbid):
     )
 
     _min_length = validate(min_length(1), 'historical_capacities')
+    _unique_years = validate(
+        unique_elements(lambda model: model.year),
+        'historical_capacities',
+    )
+    _unique_unit_id = validate(
+        unique_elements(lambda model: model.unit_id),
+        'plant_swarm'
+    )
 
 
 class CoalCapacityLandscapeData(BaseModel, extra=Extra.forbid):
@@ -491,6 +526,14 @@ class CountryCoalPowerGeneration(BaseModel, extra=Extra.forbid):
         'cumulative_demand_changes',
         'electricity_generation_ratios'
     )
+    _unique_years = validate(
+        unique_elements(lambda model: model.year),
+        'electricity_demand_per_capita',
+        'electricity_generation_by_fuel',
+        'cumulative_generation_changes',
+        'cumulative_demand_changes',
+        'electricity_generation_ratios'
+    )
 
 
 class WorldCoalPowerGeneration(BaseModel, extra=Extra.forbid):
@@ -501,6 +544,10 @@ class WorldCoalPowerGeneration(BaseModel, extra=Extra.forbid):
     )
 
     _min_length = validate(min_length(1), 'electricity_demand_per_capita')
+    _unique_years = validate(
+        unique_elements(lambda model: model.year),
+        'electricity_demand_per_capita'
+    )
 
 
 class RegionalEnum(str, Enum):
@@ -606,6 +653,11 @@ class MapboxData(BaseModel, extra=Extra.forbid):
     features: List[MapboxFeature]
     type: Literal['FeatureCollection']
 
+    _unique_id = validate(
+        unique_elements(lambda model: model.id),
+        'features'
+    )
+
 
 # ---------------------------------------------------------------------------
 # Country Bounding Boxes
@@ -648,6 +700,15 @@ class PhaseOutStatuses(BaseModel, extra=Extra.forbid):
         'coal_free',
         'ppca_member',
     )
+    _unique_isos = validate(
+        unique_elements(str),
+        'no_coal',
+        'phase_out_in_consideration',
+        'phase_out_by_2030',
+        'phase_out_by_2040',
+        'coal_free',
+        'ppca_member',
+    )
 
 
 class NewCoalStatuses(BaseModel, extra=Extra.forbid):
@@ -659,6 +720,13 @@ class NewCoalStatuses(BaseModel, extra=Extra.forbid):
 
     _min_length = validate(
         min_length(1),
+        'constructing_new_coal',
+        'planning_new_coal',
+        'committed_to_no_new_coal',
+        'cancelled_coal'
+    )
+    _unique_isos = validate(
+        unique_elements(str),
         'constructing_new_coal',
         'planning_new_coal',
         'committed_to_no_new_coal',
@@ -683,6 +751,7 @@ class NewsFeedItem(BaseModel, extra=Extra.forbid):
 
     _min_length = validate(min_length(1), 'links')
     _is_american_date = validate(american_date, 'date')
+    _unique_links = validate(unique_elements(str), 'links')
 
 
 class RegionEnum(str, Enum):
@@ -719,6 +788,14 @@ class CountryNewsFeed(BaseModel, extra=Extra.forbid):
     global_article_ids: List[ArticleID]
     news_article_ids: List[ArticleID]
 
+    _unique_article_ids = validate(
+        unique_elements(str),
+        'national_article_ids',
+        'regional_article_ids',
+        'global_article_ids',
+        'news_article_ids'
+    )
+
 
 class NewsFeedData(BaseModel, extra=Extra.forbid):
     news_article_ids: List[ArticleID]
@@ -730,6 +807,7 @@ class NewsFeedData(BaseModel, extra=Extra.forbid):
     _min_length = validate(min_length(1), 'articles')
     _require_countries_keys = validate(require_dict_keys([IsoEnum['id']]), 'countries')
     _is_american_date = validate(american_date, 'latest_date')
+    _unique_article_ids = validate(unique_elements(str), 'news_article_ids')
 
 
 # ---------------------------------------------------------------------------

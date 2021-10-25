@@ -38,7 +38,7 @@ The `mapbox.json` data is uploaded one [feature](https://docs.mapbox.com/api/map
 
 ## Schema and Validation
 
-Each JSON file is accompanied by a [Pydantic model](https://pydantic-docs.helpmanual.io/), which is used as a schema documentation and runtime validation. The Pydantic models can be found in `schema/models.py`. The source code references two other files, namely `schema/utils.py` and `schema/enum_key_value_pairs.py`, which contain custom validators and valid country names and the corresponding ISO 3166-1 alpha-2 country codes.
+Each JSON file is accompanied by a [Pydantic model](https://pydantic-docs.helpmanual.io/), which is used as a schema documentation and runtime validation. The Pydantic models can be found in `schema/models.py`. The source code references two other files, namely `schema/validation.py` and `schema/enum_key_value_pairs.py`, which contain custom validators and valid country names and the corresponding ISO 3166-1 alpha-2 country codes.
 
 In the `docker` directory, we make available a `Dockerfile` and a `requirements.txt` to build an ephemeral Docker container, which we used to generate the data at the time writing.
 

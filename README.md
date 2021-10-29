@@ -45,8 +45,3 @@ In the `docker` directory, we make available a `Dockerfile` and a `requirements.
 ## License
 
 As the datasets are built upon the GEM's GCPT dataset, the BGCC datasets are also licensed under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license. Therefore, it is allowed to copy and redistribute, as well as to build upon the datasets for any purpose including for commercial purposes. If you do build upon the datasets, you must distribute it under the same license.
-
-## References
-
-* Free vector and raster map data @ naturalearthdata.com.
-* United Nations, Department of Economic and Social Affairs, Population Division (2019). World Population Prospects 2019, Online Edition. Rev. 1.

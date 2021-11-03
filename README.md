@@ -1,3 +1,5 @@
+## Bloomberg Global Coal Countdown
+
 ![](https://bloombergcoalcountdown.com/_next/static/images/big-black-logo-46b32763924ec161ae53ca88b2c25517.webp)
 
 This is the accompanying repository for the **[Bloomberg Global Coal Countdown](https://bloombergcoalcountdown.com/) (BGCC)** website.

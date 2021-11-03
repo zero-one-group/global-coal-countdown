@@ -1,8 +1,17 @@
-# Global Coal Countdown
+![](https://bloombergcoalcountdown.com/_next/static/images/big-black-logo-46b32763924ec161ae53ca88b2c25517.webp)
+
+This is the accompanying repository for the **[Bloomberg Global Coal Countdown](https://bloombergcoalcountdown.com/) (BGCC)** website.
+
+<ul>
+  <li><a href="#data-sources">Data Sources</a></li>
+  <li><a href="#dashboard-data">Dashboard Data</a></li>
+  <li><a href="#schema-and-validation">Schema and Validation</a></li>
+  <li><a href="#license">License</a></li>
+</ul>
 
 ## Data Sources
 
-The data presented in the **Bloomberg Global Coal Countdown (BGCC)** website comes from the following sources:
+The data presented on the BGCC website comes from the following sources:
 
 1. [Global Energy Monitor's (GEM)](https://globalenergymonitor.org/) [Global Coal Plant Tracker (GCPT)](https://globalenergymonitor.org/projects/global-coal-plant-tracker/) and the accompanying GCPT status changes since 2015. GEM's GCPT dataset provides unit-level data and it is the basis for all calculations related to coal-plant capacity, status, technology and age.
 2. Country-level coal phaseout strategies, country-level expected retirements and global emission pathways from [University of Maryland's (UMD)](https://www.umd.edu/) [Center for Global Sustainability (CGS)](https://cgs.umd.edu/). Datasets from UMD are outputs from published research, and are therefore mostly served as is with very few modifications for aesthetic purposes such as smooth interpolation.
